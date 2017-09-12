@@ -1,7 +1,7 @@
 #blog/admin.py
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 
 # admin.ModelAdmin
 
@@ -33,3 +33,7 @@ class PostAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display=['name']
