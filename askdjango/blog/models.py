@@ -3,6 +3,7 @@ from django.db import models
 import re
 from django.conf import settings
 from django.forms import ValidationError
+from django.core.urlresolvers import reverse
 
 def lnglat_validator(value):
     if not re.match(r'^([+-]?\d+\.?\d*),([+-?]\d+\.?\d*)$',value):
@@ -13,7 +14,7 @@ class Post(models.Model):
         ('d','Draft'),
         ('p','Published'),
         ('w','Withdrawn'),
-    )
+    ) 
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     #author = models.CharField(max_length=20)
     title = models.CharField(max_length=100,verbose_name='제목',
@@ -33,7 +34,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
+    
+    def get_absolute_url(self):
+        return reverse('blog:post_detail',args=[self.id])
 
 
 class Comment(models.Model):
